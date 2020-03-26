@@ -108,6 +108,15 @@ namespace Nez
 		}
 
 		[Conditional("DEBUG")]
+		public static void DrawCircle(Vector2 position, float radius, Color color, float duration = 0f)
+		{
+			if (!Core.DebugRenderEnabled)
+				return;
+
+			_debugDrawItems.Add(new DebugDrawItem(position.X, position.Y, radius, color, duration));
+		}
+
+		[Conditional("DEBUG")]
 		public static void DrawText(BitmapFont font, string text, Vector2 position, Color color, float duration = 0f,
 									float scale = 1f)
 		{

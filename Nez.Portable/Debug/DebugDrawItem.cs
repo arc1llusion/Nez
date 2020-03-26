@@ -12,6 +12,7 @@ namespace Nez
 		{
 			Line,
 			HollowRectangle,
+			Circle,
 			Pixel,
 			BitmapFontText,
 			SpriteFontText,
@@ -22,6 +23,9 @@ namespace Nez
 		public Vector2 Start;
 		public Vector2 End;
 		public Rectangle Rectangle;
+
+		// used for Circle items
+		public float Radius;
 
 		// used for Text items
 		public string Text;
@@ -59,6 +63,15 @@ namespace Nez
 			drawType = DebugDrawType.HollowRectangle;
 		}
 
+		public DebugDrawItem(float x, float y, float radius, Color color, float duration)
+		{
+			X = x;
+			Y = y;
+			Radius = radius;
+			Color = color;
+			Duration = duration;
+			drawType = DebugDrawType.Circle;
+		}
 
 		public DebugDrawItem(float x, float y, int size, Color color, float duration)
 		{
@@ -136,6 +149,9 @@ namespace Nez
 					batcher.DrawString(BitmapFont, Text, Position, Color, 0f, Vector2.Zero, Scale,
 						SpriteEffects.None, 0f);
 					break;
+				case DebugDrawType.Circle:
+					batcher.DrawCircle(X, Y, Radius, Color);
+					break;
 			}
 
 			Duration -= Time.DeltaTime;
@@ -152,6 +168,8 @@ namespace Nez
 					return (End - Start).Y;
 				case DebugDrawType.HollowRectangle:
 					return Rectangle.Height;
+				case DebugDrawType.Circle:
+					return Radius;
 				case DebugDrawType.Pixel:
 					return Size;
 				case DebugDrawType.BitmapFontText:
