@@ -455,6 +455,55 @@ namespace Nez.Spatial
 			return resultCounter;
 		}
 
+		/// <summary>
+		/// gets all the colliders that fall within the specified circle
+		/// </summary>
+		/// <returns>the number of Colliders returned</returns>
+		/// <param name="circleCenter">Circle center.</param>
+		/// <param name="radius">Radius.</param>
+		/// <param name="results">Results.</param>
+		/// <param name="layerMask">Layer mask.</param>
+		public IEnumerable<Collider> OverlapCircle(Vector2 circleCenter, float radius, int layerMask)
+		{
+			List<Collider> colliders = new List<Collider>();
+			var bounds = new RectangleF(circleCenter.X - radius, circleCenter.Y - radius, radius * 2f, radius * 2f);
+
+			_overlapTestCirce.Radius = radius;
+			_overlapTestCirce.position = circleCenter;
+
+			var potentials = AabbBroadphase(ref bounds, null, layerMask);
+			foreach (var collider in potentials)
+			{
+				if (collider is BoxCollider)
+				{
+					if (collider.Shape.Overlaps(_overlapTestCirce))
+					{
+						colliders.Add(collider);
+					}
+				}
+				else if (collider is CircleCollider)
+				{
+					if (collider.Shape.Overlaps(_overlapTestCirce))
+					{
+						colliders.Add(collider);
+					}
+				}
+				else if (collider is PolygonCollider)
+				{
+					if (collider.Shape.Overlaps(_overlapTestCirce))
+					{
+						colliders.Add(collider);
+					}
+				}
+				else
+				{
+					throw new NotImplementedException("overlapCircle against this collider type is not implemented!");
+				}
+			}
+
+			return colliders.ToArray();
+		}
+
 		#endregion
 	}
 

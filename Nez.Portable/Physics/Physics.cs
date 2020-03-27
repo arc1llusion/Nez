@@ -220,6 +220,18 @@ namespace Nez
 			return _spatialHash.OverlapCircle(center, radius, results, layerMask);
 		}
 
+		/// <summary>
+		/// gets all the colliders that fall within the specified circle
+		/// </summary>
+		/// <returns>the number of Colliders returned</returns>
+		/// <param name="center">Center.</param>
+		/// <param name="radius">Radius.</param>
+		/// <param name="layerMask">Layer mask.</param>
+		public static IEnumerable<Collider> OverlapCircleAll(Vector2 center, float radius, int layerMask = AllLayers)
+		{
+			return _spatialHash.OverlapCircle(center, radius, layerMask);
+		}
+
 
 		#region Broadphase methods
 
