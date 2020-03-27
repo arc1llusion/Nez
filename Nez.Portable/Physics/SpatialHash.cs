@@ -461,7 +461,6 @@ namespace Nez.Spatial
 		/// <returns>the number of Colliders returned</returns>
 		/// <param name="circleCenter">Circle center.</param>
 		/// <param name="radius">Radius.</param>
-		/// <param name="results">Results.</param>
 		/// <param name="layerMask">Layer mask.</param>
 		public IEnumerable<Collider> OverlapCircle(Vector2 circleCenter, float radius, int layerMask)
 		{
